@@ -8,8 +8,37 @@ Globals:
     Runtime: nodejs14.x
     MemorySize: 512
 Resources:
+  MainDLQSQS:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: MainsDLQ.fifo
+      ContentBasedDeduplication: true
+      FifoQueue: true
+      MessageRetentionPeriod: 864000
+  MainSQS:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: Mains.fifo
+      ContentBasedDeduplication: true
+      FifoQueue: true
+      MessageRetentionPeriod: 864000
+      VisibilityTimeout: 180
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt MainDLQSQS.Arn
+        maxReceiveCount: 5
   MainFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/
+      FunctionName: MainProcessorFunction
+      CodeUri: "src"
       Handler: index.handleEvent
+      ReservedConcurrentExecutions: 5
+      Events:
+        SQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt MainSQS.Arn
+            BatchSize: 10
+      Policies:
+        - SQSPollerPolicy:
+            QueueName: !GetAtt MainSQS.QueueName
