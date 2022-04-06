@@ -1,5 +1,5 @@
 {
-  "name": "aws-lambda-barebone",
+  "name": "aws-sqs-lambda-barebone",
   "version": "1.0.0",
   "description": "Barebone for aws lambda function using node.js. It can be deployed using AWS SAM.",
   "main": "src/index.js",
@@ -10,17 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/singhs020/aws-lambda-barebone.git"
   },
-  "author": "Simranjeet Singh",
+  "author": "Simranjeet Singh (AWSMAG.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/singhs020/aws-lambda-barebone/issues"
+    "url": "https://github.com/singhs020/aws-sqs-lambda-barebone/issues"
   },
-  "homepage": "https://github.com/singhs020/aws-lambda-barebone#readme",
+  "homepage": "https://github.com/singhs020/aws-sqs-lambda-barebone#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
     "gulp-shell": "^0.8.0",
-    "mocha": "^9.0.2",
+    "mocha": "^9.2.2",
     "nyc": "^15.1.0"
   }
 }
